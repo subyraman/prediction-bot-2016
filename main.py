@@ -1,5 +1,6 @@
 import asyncio
 
+from db import Base, engine
 from fivethirtyeight import research as fivethirtyeight_research
 import logging
 import sys
@@ -21,6 +22,8 @@ if __name__ == '__main__':
     root.setLevel(logging.INFO)
     handler = logging.StreamHandler(sys.stdout)
     root.addHandler(handler)
+
+    Base.metadata.create_all(engine)
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())

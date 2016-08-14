@@ -2,3 +2,4 @@
 heroku_env
 sublime
 __pycache__
+*.db
