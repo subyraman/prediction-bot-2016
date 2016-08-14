@@ -1,0 +1,4 @@
+.env
+heroku_env
+sublime
+__pycache__
