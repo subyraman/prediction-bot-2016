@@ -12,6 +12,7 @@ def custom_round(n, ndigits):
         part = math.floor(part)
     return part / (10 ** ndigits)
 
+
 def has_forecast_changed(model, results):
     with database_session() as session:
         most_recent = session.query(model)\

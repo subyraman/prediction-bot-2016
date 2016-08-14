@@ -7,6 +7,7 @@ import pprint
 
 from utils import custom_round, has_forecast_changed
 from db import FiveThirtyEight, database_session
+from twitter_api import post_tweet
 
 POLLS_ONLY_URL = 'http://projects.fivethirtyeight.com/2016-election-forecast/'
 US_REGEX = 'race\.stateData\s*=\s*(\{"state"\s*:\s*"US".*\})'
@@ -52,12 +53,17 @@ def save_new_forecast(results):
 
 
 def assemble_tweet_message(results):
-    logging.info('Assembling tweet message.')
-    return 'Foo'
+    logging.info('Assembling tweet message with results: {}'.format(results))
+    msg = 'New 538 Forecast data!\n\n'
 
+    msg += 'Polls: Clinton {} | Trump {}\n'.format(
+        results['hillary_polls_prob'], results['trump_polls_prob'])
+    msg += 'PollsPlus: Clinton {} | Trump {}\n'.format(
+        results['hillary_plus_prob'], results['trump_plus_prob'])
+    msg += 'NowCast: Clinton {} | Trump {}\n'.format(
+        results['hillary_now_prob'], results['trump_now_prob'])
 
-def post_tweet(message):
-    logging.info('Posting new tweet: {}'.format(message))
+    return msg
 
 async def get_538_page():
     html = await get_page(POLLS_ONLY_URL)
