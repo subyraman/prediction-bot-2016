@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import (
     Column,
     Integer,
@@ -72,7 +72,7 @@ class PEC(Base):
     trump_win_prob = Column(Integer)
 
 engine = create_engine(os.environ['DATABASE_URL'])
-Session = sessionmaker(bind=engine)
+Session = scoped_session(sessionmaker(bind=engine))
 
 
 @contextmanager
@@ -87,3 +87,4 @@ def database_session():
         raise
     finally:
         session.close()
+        Session.remove()

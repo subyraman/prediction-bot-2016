@@ -52,7 +52,7 @@ def assemble_tweet_message(results, changes):
 
     if changes.get('hillary_win_prob'):
         msg.strip()
-        msg += '{}\n'.format(
+        msg += ' ({})\n'.format(
             change_to_string(changes['hillary_win_prob']))
 
     msg += 'Trump win probability: {}%\n'.format(
@@ -60,7 +60,7 @@ def assemble_tweet_message(results, changes):
 
     if changes.get('trump_win_prob'):
         msg.strip()
-        msg += '{}\n'.format(
+        msg += ' ({})\n'.format(
             change_to_string(changes['trump_win_prob']))
 
     msg += '@nytimes'

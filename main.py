@@ -8,6 +8,7 @@ from pec import research as pec_research
 from nyt import research as nyt_research
 import logging
 import sys
+from twitter_api import api
 
 UPDATE_INTERVAL = 300
 
@@ -30,6 +31,8 @@ async def main():
             await asyncio.sleep(UPDATE_INTERVAL)
 
 if __name__ == '__main__':
+    api.VerifyCredentials()
+
     root = logging.getLogger()
     root.setLevel(logging.INFO)
     handler = logging.StreamHandler(sys.stdout)
