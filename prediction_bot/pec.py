@@ -21,6 +21,9 @@ def parse_page(html):
     trump_search = re.search(TRUMP_PERCENTAGE_REGEX, html)
     is_trump = False
 
+    if not clinton_search and not trump_search:
+        raise Exception('Could not find Clinton or Trump data in PEC.')
+
     if clinton_search:
         search = clinton_search
 

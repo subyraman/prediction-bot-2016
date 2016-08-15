@@ -3,7 +3,6 @@ heroku_env
 sublime
 __pycache__
 *.db
-test
 build
 dist
 *.egg-info*

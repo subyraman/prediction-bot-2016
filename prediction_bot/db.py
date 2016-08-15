@@ -72,6 +72,7 @@ class PEC(Base):
     hillary_win_prob = Column(Integer)
     trump_win_prob = Column(Integer)
 
+
 if 'test' in sys.argv[0]:
     database_url = 'sqlite:////:memory:'
 else:
