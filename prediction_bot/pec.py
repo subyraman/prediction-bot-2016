@@ -1,12 +1,12 @@
 import asyncio
 import logging
-from web import get_page
+from prediction_bot.web import get_page
 import re
 import pprint
 
-from utils import has_forecast_changed, get_forecast_changes, change_to_string
-from db import PEC, database_session
-from twitter_api import post_tweet
+from prediction_bot.utils import has_forecast_changed, get_forecast_changes, change_to_string
+from prediction_bot.db import PEC, database_session
+from prediction_bot.twitter_api import post_tweet
 
 POLLS_ONLY_URL = 'http://election.princeton.edu/'
 CLINTON_PERCENTAGE_REGEX = 'Clinton Nov. win probability.*Bayesian\s*(.*)%'
@@ -62,7 +62,7 @@ def assemble_tweet_message(results, changes):
             results['hillary_win_prob'])
 
         if changes.get('hillary_win_prob'):
-            msg.strip()
+            msg = msg.strip()
             msg += " {}\n\n".format(
                 change_to_string(changes.get('hillary_win_prob')))
     else:
@@ -70,7 +70,7 @@ def assemble_tweet_message(results, changes):
             results['trump_win_prob'])
 
         if changes.get('trump_win_prob'):
-            msg.strip()
+            msg = msg.strip()
             msg += " {}\n\n".format(
                 change_to_string(changes.get('trump_win_prob')))
 

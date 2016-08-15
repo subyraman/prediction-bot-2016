@@ -12,6 +12,7 @@ from sqlalchemy import (
     create_engine
 )
 
+import sys
 import os
 import datetime
 from contextlib import contextmanager
@@ -71,7 +72,13 @@ class PEC(Base):
     hillary_win_prob = Column(Integer)
     trump_win_prob = Column(Integer)
 
-engine = create_engine(os.environ['DATABASE_URL'])
+if 'test' in sys.argv[0]:
+    database_url = 'sqlite:////:memory:'
+else:
+    database_url = os.environ['DATABASE_URL']
+logging.info('Database URL is {}'.format(database_url))
+
+engine = create_engine(database_url)
 Session = scoped_session(sessionmaker(bind=engine))
 
 

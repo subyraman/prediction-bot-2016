@@ -1,12 +1,12 @@
 import asyncio
 import logging
-from web import get_page
+from prediction_bot.web import get_page
 import pprint
 from bs4 import BeautifulSoup
 
-from utils import has_forecast_changed, get_forecast_changes, change_to_string
-from db import NYTUpshot, database_session
-from twitter_api import post_tweet
+from prediction_bot.utils import has_forecast_changed, get_forecast_changes, change_to_string
+from prediction_bot.db import NYTUpshot, database_session
+from prediction_bot.twitter_api import post_tweet
 
 URL = 'http://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html'
 
@@ -51,7 +51,7 @@ def assemble_tweet_message(results, changes):
         results['hillary_win_prob'])
 
     if changes.get('hillary_win_prob'):
-        msg.strip()
+        msg = msg.strip()
         msg += ' ({})\n'.format(
             change_to_string(changes['hillary_win_prob']))
 
@@ -59,7 +59,7 @@ def assemble_tweet_message(results, changes):
         results['trump_win_prob'])
 
     if changes.get('trump_win_prob'):
-        msg.strip()
+        msg = msg.strip()
         msg += ' ({})\n'.format(
             change_to_string(changes['trump_win_prob']))
 

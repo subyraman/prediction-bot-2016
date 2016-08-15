@@ -2,13 +2,13 @@ import asyncio
 
 
 import aiohttp
-from db import Base, engine
-from fivethirtyeight import research as fivethirtyeight_research
-from pec import research as pec_research
-from nyt import research as nyt_research
+from prediction_bot.db import Base, engine
+from prediction_bot.fivethirtyeight import research as fivethirtyeight_research
+from prediction_bot.pec import research as pec_research
+from prediction_bot.nyt import research as nyt_research
 import logging
 import sys
-from twitter_api import api
+from prediction_bot.twitter_api import api
 
 UPDATE_INTERVAL = 300
 

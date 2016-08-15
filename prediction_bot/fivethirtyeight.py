@@ -1,13 +1,13 @@
 import asyncio
 import logging
-from web import get_page
+from prediction_bot.web import get_page
 import re
 import json
 import pprint
 
-from utils import custom_round, has_forecast_changed, get_forecast_changes, change_to_string
-from db import FiveThirtyEight, database_session
-from twitter_api import post_tweet
+from prediction_bot.utils import custom_round, has_forecast_changed, get_forecast_changes, change_to_string
+from prediction_bot.db import FiveThirtyEight, database_session
+from prediction_bot.twitter_api import post_tweet
 
 POLLS_ONLY_URL = 'http://projects.fivethirtyeight.com/2016-election-forecast/'
 US_REGEX = 'race\.stateData\s*=\s*(\{"state"\s*:\s*"US".*\})'
@@ -43,6 +43,9 @@ def parse_page(html):
         trump_polls_prob=trump_polls_prob
     )
 
+def custom_change_to_string(change):
+    rounded = custom_round(change, 1)
+    return change_to_string(rounded)
 
 def save_new_forecast(results):
     logging.info('Saving new 538 results to db.')
@@ -60,23 +63,27 @@ def assemble_tweet_message(results, changes):
         results['hillary_polls_prob'],
         results['trump_polls_prob'])
 
-    # if changes.get('hillary_polls_prob'):
-    #     msg.strip()
-    #     msg += ' ({}H)\n'.format(changes.get('hillary_polls_prob'))
+    if changes.get('hillary_polls_prob'):
+        msg = msg.strip()
+        msg += ' ({}H)\n'.format(
+            custom_change_to_string(changes.get('hillary_polls_prob')))
 
     msg += 'PollsPlus: H{} | T{}\n'.format(
         results['hillary_plus_prob'], results['trump_plus_prob'])
 
-    # if changes.get('hillary_plus_prob'):
-    #     msg.strip()
-    #     msg += ' ({}H)\n'.format(changes.get('hillary_plus_prob'))
+    if changes.get('hillary_plus_prob'):
+        msg = msg.strip()
+        msg += ' ({}H)\n'.format(
+            custom_change_to_string(
+                changes.get('hillary_plus_prob')))
 
     msg += 'NowCast: H{} | T{}\n\n'.format(
         results['hillary_now_prob'], results['trump_now_prob'])
 
-    # if changes.get('hillary_now_prob'):
-    #     msg.strip()
-    #     msg += ' ({}H)\n'.format(changes.get('hillary_now_prob'))
+    if changes.get('hillary_now_prob'):
+        msg = msg.strip()
+        msg += ' ({}H)\n'.format(
+            custom_change_to_string(changes.get('hillary_now_prob')))
 
     return msg
 

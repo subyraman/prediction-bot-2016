@@ -1,5 +1,5 @@
 import math
-from db import database_session
+from prediction_bot.db import database_session
 
 
 def custom_round(n, ndigits):
