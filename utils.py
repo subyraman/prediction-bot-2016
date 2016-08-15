@@ -29,10 +29,10 @@ def get_forecast_changes(model, results):
         most_recent = session.query(model)\
             .order_by(model.date_added.desc()).first()
 
-    if most_recent:
-        return most_recent.get_forecast_changes(results)
-    else:
-        return {}
+        if most_recent:
+            return most_recent.get_forecast_changes(results)
+        else:
+            return {}
 
 
 def change_to_string(change):
