@@ -4,7 +4,7 @@ import logging
 from unittest.mock import MagicMock
 import sys
 
-if 'test' not in sys.argv[0] and not getattr(sys, 'testing'):
+if 'test' not in sys.argv[0]:
     api = twitter.Api(
         consumer_key=os.environ['TWITTER_CONSUMER_KEY'].strip(),
         consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'].strip(),
