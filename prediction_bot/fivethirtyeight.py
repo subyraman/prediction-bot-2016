@@ -5,7 +5,8 @@ import re
 import json
 import pprint
 
-from prediction_bot.utils import custom_round, has_forecast_changed, get_forecast_changes, change_to_string
+from prediction_bot.utils import (
+    custom_round, has_forecast_changed, get_forecast_changes, change_to_string)
 from prediction_bot.db import FiveThirtyEight, database_session
 from prediction_bot.twitter_api import post_tweet
 

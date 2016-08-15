@@ -76,6 +76,7 @@ if 'test' in sys.argv[0]:
     database_url = 'sqlite:////:memory:'
 else:
     database_url = os.environ['DATABASE_URL']
+
 logging.info('Database URL is {}'.format(database_url))
 
 engine = create_engine(database_url)

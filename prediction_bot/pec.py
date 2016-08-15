@@ -4,7 +4,10 @@ from prediction_bot.web import get_page
 import re
 import pprint
 
-from prediction_bot.utils import has_forecast_changed, get_forecast_changes, change_to_string
+from prediction_bot.utils import (
+    has_forecast_changed,
+    get_forecast_changes,
+    change_to_string)
 from prediction_bot.db import PEC, database_session
 from prediction_bot.twitter_api import post_tweet
 
