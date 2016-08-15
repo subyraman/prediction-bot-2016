@@ -35,7 +35,7 @@ def parse_page(html):
         percent = search.group(1)
     except Exception as e:
         logging.error('Could not parse PEC: {}'.format(e))
-        raise Exception
+        raise e
 
     trump_win_prob = None
     hillary_win_prob = None

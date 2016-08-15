@@ -26,7 +26,7 @@ def parse_page(html):
         forecast_data = json.loads(search.group(1))
     except Exception as e:
         logging.error('Failed to get parse data out of 538: {}'.format(e))
-        raise Exception
+        raise e
 
     hillary_now_prob = get_win_probability(forecast_data, 'D', 'now')
     hillary_plus_prob = get_win_probability(forecast_data, 'D', 'plus')

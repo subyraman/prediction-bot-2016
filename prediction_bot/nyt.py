@@ -30,7 +30,7 @@ def parse_page(html):
         trump_percentage = trump_tag[0].text.replace('%', '')
     except Exception as e:
         logging.error('Could not parse NYTUpshot: {}'.format(e))
-        raise Exception
+        raise e
 
     trump_win_prob = None
     hillary_win_prob = None
