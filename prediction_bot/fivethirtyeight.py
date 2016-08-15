@@ -19,7 +19,7 @@ def get_win_probability(forecast_data, party, forecast):
 
 
 def parse_page(html):
-    search = re.search(US_REGEX, html)  
+    search = re.search(US_REGEX, html)
 
     try:
         forecast_data = json.loads(search.group(1))
@@ -43,9 +43,11 @@ def parse_page(html):
         trump_polls_prob=trump_polls_prob
     )
 
+
 def custom_change_to_string(change):
     rounded = custom_round(change, 1)
     return change_to_string(rounded)
+
 
 def save_new_forecast(results):
     logging.info('Saving new 538 results to db.')

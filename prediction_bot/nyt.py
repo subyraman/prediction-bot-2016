@@ -4,7 +4,8 @@ from prediction_bot.web import get_page
 import pprint
 from bs4 import BeautifulSoup
 
-from prediction_bot.utils import has_forecast_changed, get_forecast_changes, change_to_string
+from prediction_bot.utils import (
+    has_forecast_changed, get_forecast_changes, change_to_string)
 from prediction_bot.db import NYTUpshot, database_session
 from prediction_bot.twitter_api import post_tweet
 
@@ -15,10 +16,18 @@ def parse_page(html):
     soup = BeautifulSoup(html, 'html.parser')
 
     try:
-        clinton_percentage = soup.select(
-            '.g-cand-top-line-est.clinton-est')[0].text.replace('%', '')
-        trump_percentage = soup.select(
-            '.g-cand-top-line-est.trump-est')[0].text.replace('%', '')
+        clinton_tag = soup.select(
+            '.g-cand-top-line-est.clinton-est')
+        trump_tag = soup.select(
+            '.g-cand-top-line-est.trump-est')
+
+        if not clinton_tag or not trump_tag:
+            logging.error(
+                'Could not parse NYTUpshot page, no percentages present.')
+            raise Exception
+
+        clinton_percentage = clinton_tag[0].text.replace('%', '')
+        trump_percentage = trump_tag[0].text.replace('%', '')
     except Exception as e:
         logging.error('Could not parse NYTUpshot: {}'.format(e))
         raise Exception
