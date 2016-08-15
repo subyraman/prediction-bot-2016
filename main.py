@@ -20,6 +20,7 @@ async def main():
                 nyt_research(client),
                 fivethirtyeight_research(client),
                 pec_research(client),
+                return_exceptions=True,
             )
 
             logging.info(

@@ -60,23 +60,23 @@ def assemble_tweet_message(results, changes):
         results['hillary_polls_prob'],
         results['trump_polls_prob'])
 
-    if changes.get('hillary_polls_prob'):
-        msg.strip()
-        msg += ' ({}H)\n'.format(changes.get('hillary_polls_prob'))
+    # if changes.get('hillary_polls_prob'):
+    #     msg.strip()
+    #     msg += ' ({}H)\n'.format(changes.get('hillary_polls_prob'))
 
     msg += 'PollsPlus: H{} | T{}\n'.format(
         results['hillary_plus_prob'], results['trump_plus_prob'])
 
-    if changes.get('hillary_plus_prob'):
-        msg.strip()
-        msg += ' ({}H)\n'.format(changes.get('hillary_plus_prob'))
+    # if changes.get('hillary_plus_prob'):
+    #     msg.strip()
+    #     msg += ' ({}H)\n'.format(changes.get('hillary_plus_prob'))
 
     msg += 'NowCast: H{} | T{}\n\n'.format(
         results['hillary_now_prob'], results['trump_now_prob'])
 
-    if changes.get('hillary_now_prob'):
-        msg.strip()
-        msg += ' ({}H)\n'.format(changes.get('hillary_now_prob'))
+    # if changes.get('hillary_now_prob'):
+    #     msg.strip()
+    #     msg += ' ({}H)\n'.format(changes.get('hillary_now_prob'))
 
     return msg
 
