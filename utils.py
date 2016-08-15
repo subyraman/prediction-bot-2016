@@ -22,3 +22,21 @@ def has_forecast_changed(model, results):
             return most_recent.has_forecast_changed(results)
 
         return True
+
+
+def get_forecast_changes(model, results):
+    with database_session() as session:
+        most_recent = session.query(model)\
+            .order_by(model.date_added.desc()).first()
+
+    if most_recent:
+        return most_recent.get_forecast_changes(results)
+    else:
+        return {}
+
+
+def change_to_string(change):
+    if change > 0:
+        return "+{}".format(change)
+
+    return "{}".format(change)

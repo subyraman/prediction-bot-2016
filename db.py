@@ -33,6 +33,17 @@ class Model:
 
         return False
 
+    def get_forecast_changes(self, new_data):
+        ret = {}
+
+        for key, value in new_data.items():
+            old_value = getattr(self, key)
+            if old_value != value:
+                if type(old_value) == type(value):
+                    ret[key] = value - old_value
+
+        return ret
+
 Base = declarative_base(cls=Model)
 
 
@@ -52,7 +63,6 @@ class NYTUpshot(Base):
 
     hillary_win_prob = Column(Integer)
     trump_win_prob = Column(Integer)
-    date_added = Column(DateTime, default=datetime.datetime.now)
 
 
 class PEC(Base):
@@ -60,7 +70,6 @@ class PEC(Base):
 
     hillary_win_prob = Column(Integer)
     trump_win_prob = Column(Integer)
-    date_added = Column(DateTime, default=datetime.datetime.now)
 
 engine = create_engine(os.environ['DATABASE_URL'])
 Session = sessionmaker(bind=engine)

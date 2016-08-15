@@ -5,7 +5,7 @@ import re
 import json
 import pprint
 
-from utils import custom_round, has_forecast_changed
+from utils import custom_round, has_forecast_changed, get_forecast_changes, change_to_string
 from db import FiveThirtyEight, database_session
 from twitter_api import post_tweet
 
@@ -52,16 +52,31 @@ def save_new_forecast(results):
         session.commit()
 
 
-def assemble_tweet_message(results):
+def assemble_tweet_message(results, changes):
     logging.info('Assembling tweet message with results: {}'.format(results))
-    msg = 'New 538 Forecast data!\n\n'
+    msg = 'New @fivethirtyeight forecast data!\n\n'
 
-    msg += 'Polls: Clinton {} | Trump {}\n'.format(
-        results['hillary_polls_prob'], results['trump_polls_prob'])
-    msg += 'PollsPlus: Clinton {} | Trump {}\n'.format(
+    msg += 'Polls: H{} | T{}\n'.format(
+        results['hillary_polls_prob'],
+        results['trump_polls_prob'])
+
+    if changes.get('hillary_polls_prob'):
+        msg.strip()
+        msg += ' ({}H)\n'.format(changes.get('hillary_polls_prob'))
+
+    msg += 'PollsPlus: H{} | T{}\n'.format(
         results['hillary_plus_prob'], results['trump_plus_prob'])
-    msg += 'NowCast: Clinton {} | Trump {}\n'.format(
+
+    if changes.get('hillary_plus_prob'):
+        msg.strip()
+        msg += ' ({}H)\n'.format(changes.get('hillary_plus_prob'))
+
+    msg += 'NowCast: H{} | T{}\n\n'.format(
         results['hillary_now_prob'], results['trump_now_prob'])
+
+    if changes.get('hillary_now_prob'):
+        msg.strip()
+        msg += ' ({}H)\n'.format(changes.get('hillary_now_prob'))
 
     return msg
 
@@ -85,7 +100,9 @@ async def research():
         logging.info('538 Forecast has not changed.')
         return
 
+    changes = await loop.run_in_executor(
+        None, get_forecast_changes, FiveThirtyEight, results)
     await loop.run_in_executor(None, save_new_forecast, results)
 
-    message = assemble_tweet_message(results)
+    message = assemble_tweet_message(results, changes)
     await loop.run_in_executor(None, post_tweet, message)
