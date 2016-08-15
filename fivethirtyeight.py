@@ -19,7 +19,7 @@ def get_win_probability(forecast_data, party, forecast):
 
 
 def parse_page(html):
-    search = re.search(US_REGEX, html)
+    search = re.search(US_REGEX, html)  
 
     try:
         forecast_data = json.loads(search.group(1))
@@ -80,14 +80,14 @@ def assemble_tweet_message(results, changes):
 
     return msg
 
-async def get_538_page():
-    html = await get_page(POLLS_ONLY_URL)
+async def get_538_page(client):
+    html = await get_page(client, POLLS_ONLY_URL)
 
     return html
 
-async def research():
+async def research(client):
     loop = asyncio.get_event_loop()
-    html = await get_538_page()
+    html = await get_538_page(client)
 
     results = await loop.run_in_executor(None, parse_page, html)
     logging.info('538 Results are:\n{}'.format(pprint.pformat(results)))

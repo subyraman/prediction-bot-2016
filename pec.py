@@ -78,14 +78,14 @@ def assemble_tweet_message(results, changes):
 
     return msg
 
-async def get_pec_page():
-    html = await get_page(POLLS_ONLY_URL)
+async def get_pec_page(client):
+    html = await get_page(client, POLLS_ONLY_URL)
 
     return html
 
-async def research():
+async def research(client):
     loop = asyncio.get_event_loop()
-    html = await get_pec_page()
+    html = await get_pec_page(client)
 
     results = await loop.run_in_executor(None, parse_page, html)
     logging.info('PEC Results are:\n{}'.format(pprint.pformat(results)))

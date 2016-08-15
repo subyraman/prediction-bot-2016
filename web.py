@@ -1,6 +1,4 @@
-import aiohttp
-
-async def get_page(url):
-    res = await aiohttp.get(url)
-    text = await res.text()
-    return text
+async def get_page(client, url):
+    async with client.get(url) as res:
+        text = await res.text()
+        return text
