@@ -36,6 +36,14 @@ class TestPEC(TestCase):
 
         self.assertEqual(ret, expected)
 
+    def test_assemble_tweet_with_changes(self):
+        changes = {
+            'hillary_win_prob': 1
+        }
+        ret = pec.assemble_tweet_message(self.results, changes)
+        expected = 'New Princeton Electon Consortium forecast!\n\nClinton win probability: 88% (+1)\n\n@samwangphd'
+        self.assertEqual(expected, ret)
+
 if __name__ == '__main__':
     import unittest
     unittest.main()
