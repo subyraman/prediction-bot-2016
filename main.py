@@ -8,6 +8,7 @@ from prediction_bot.fivethirtyeight import research as fivethirtyeight_research
 from prediction_bot.pec import research as pec_research
 from prediction_bot.nyt import research as nyt_research
 from prediction_bot.twitter_api import api
+from prediction_bot.dailykos import research as dailykos_research
 
 UPDATE_INTERVAL = 300
 
@@ -19,6 +20,7 @@ async def main():
                 nyt_research(client),
                 fivethirtyeight_research(client),
                 pec_research(client),
+                dailykos_research(client),
                 return_exceptions=True,
             )
 

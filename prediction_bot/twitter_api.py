@@ -16,4 +16,6 @@ else:
 
 def post_tweet(message):
     logging.info('Posting new tweet: {}'.format(message))
-    api.PostUpdate(message, verify_status_length=False)
+
+    if not os.environ.get('DEBUG'):
+        api.PostUpdate(message, verify_status_length=False)

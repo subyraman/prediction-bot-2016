@@ -73,6 +73,12 @@ class PEC(Base):
     trump_win_prob = Column(Integer)
 
 
+class DailyKos(Base):
+    __tablename__ = 'dailykos'
+
+    hillary_win_prob = Column(Float)
+    trump_win_prob = Column(Float)
+
 if 'test' in sys.argv[0]:
     database_url = 'sqlite:////:memory:'
 else:
